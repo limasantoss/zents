@@ -19,13 +19,13 @@ if uploaded_file:
     st.caption(explic_var)
 
     # Download da documentação das variáveis
-    #col1, col2 = st.columns(2)
-    #with col1:
-        #st.download_button(
-           # "Download documentação",
-           # var_doc.to_csv(index=False),
-            #"documentacao_variaveis.csv"
-        #)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.download_button(
+           #"Download documentação",
+           var_doc.to_csv(index=False),
+            "documentacao_variaveis.csv"
+        )
 
     # 2. Estatísticas Descritivas
     st.subheader("2. Estatísticas Descritivas")
