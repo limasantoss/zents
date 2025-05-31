@@ -5,7 +5,7 @@ from eda import (
 )
 
 st.set_page_config(page_title="Zents EDA Automação", layout="wide")
-st.title("Zents EDA - Análise Exploratória Inteligente")
+st.title("Zents EDA ")
 
 uploaded_file = st.file_uploader("Arraste seu CSV/Excel aqui", type=['csv', 'xlsx'])
 if uploaded_file:
@@ -73,7 +73,7 @@ if uploaded_file:
     st.markdown("---")
     st.subheader("Baixar Dados Tratados (CSV Final)")
     st.download_button(
-        "⬇️ Baixar arquivo tratado (CSV)",
+        " Baixar arquivo tratado (CSV)",
         limpeza_df.to_csv(index=False).encode('utf-8'),
         file_name="dados_tratados.csv",
         mime="text/csv"
