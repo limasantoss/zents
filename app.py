@@ -4,8 +4,8 @@ from eda import (
     estatisticas, limpeza, visualizacoes, correlacao, relatorio, recomendacoes
 )
 
-st.set_page_config(page_title="Zents EDA Automação", layout="wide")
-st.title("Zents EDA - Análise Exploratória Inteligente")
+st.set_page_config(page_title="Zents EDA", layout="wide")
+st.title("Zents EDA ")
 
 uploaded_file = st.file_uploader("Arraste seu CSV/Excel aqui", type=['csv', 'xlsx'])
 if uploaded_file:
