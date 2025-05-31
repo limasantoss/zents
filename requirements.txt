@@ -1,7 +1,8 @@
 streamlit
 pandas
-plotly
 matplotlib
-fpdf
-openpyxl
 seaborn
+plotly
+numpy
+fpdf
+scipy
