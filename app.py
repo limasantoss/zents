@@ -74,13 +74,12 @@ def gerar_pdf_mem(df, resumo_limpeza):
     pdf.cell(0, 10, f"Total de colunas: {len(df.columns)}", 0, 1)
     pdf.cell(0, 10, "Resumo da Limpeza:", 0, 1)
     for item in resumo_limpeza:
-        pdf.cell(0, 10, item, 0, 1)
+        pdf.multi_cell(0, 10, item)  # quebra de linha automática
     pdf.cell(0, 10, "Tipos de Dados:", 0, 1)
     for col in df.dtypes.index:
-        pdf.cell(0, 10, f"{col}: {df.dtypes[col]}", 0, 1)
-    pdf_bytes = BytesIO()
-    pdf.output(pdf_bytes)
-    pdf_bytes.seek(0)
+        tipo = str(df.dtypes[col])
+        pdf.cell(0, 10, f"{col}: {tipo}", 0, 1)
+    pdf_bytes = pdf.output(dest='S').encode('latin1')
     return pdf_bytes
 
 # --------- Interface Streamlit ---------
