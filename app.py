@@ -5,18 +5,27 @@ from eda import (
 )
 
 st.set_page_config(page_title="Zents EDA Automação", layout="wide")
-st.title("Zents EDA ")
+st.title("Zents EDA - Análise Exploratória Inteligente")
 
 uploaded_file = st.file_uploader("Arraste seu CSV/Excel aqui", type=['csv', 'xlsx'])
 if uploaded_file:
+    # Leitura do arquivo
     df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
 
     # 1. Identificação das Variáveis
-    var_doc, explic_var = estatisticas.identificar_variaveis(df)
     st.subheader("1. Identificação das Variáveis")
+    var_doc, explic_var = estatisticas.identificar_variaveis(df)
     st.dataframe(var_doc)
     st.caption(explic_var)
-    st.download_button("Download documentação", var_doc.to_csv(index=False), "documentacao_variaveis.csv")
+
+    # Download da documentação das variáveis
+    col1, col2 = st.columns(2)
+    with col1:
+        st.download_button(
+            "Download documentação",
+            var_doc.to_csv(index=False),
+            "documentacao_variaveis.csv"
+        )
 
     # 2. Estatísticas Descritivas
     st.subheader("2. Estatísticas Descritivas")
@@ -29,6 +38,15 @@ if uploaded_file:
     limpeza_df, resumo_limpeza, explic_nulos = limpeza.limpeza_nulos(df)
     st.dataframe(resumo_limpeza)
     st.markdown(explic_nulos)
+
+    # Download do arquivo tratado
+    with col2:
+        st.download_button(
+            "⬇️ Baixar arquivo tratado (CSV)",
+            limpeza_df.to_csv(index=False).encode('utf-8'),
+            file_name="dados_tratados.csv",
+            mime="text/csv"
+        )
 
     # 4. Gráficos Exploratórios com Insights Automáticos
     st.subheader("4. Gráficos Exploratórios com Insights Automáticos")
@@ -55,8 +73,7 @@ if uploaded_file:
 
     # 8. Relatório PDF Automático
     st.subheader("8. Relatório PDF Automático")
-    gerar_pdf = st.button("Gerar PDF")
-    if gerar_pdf:
+    if st.button("Gerar PDF"):
         pdf_bytes = relatorio.gerar_pdf(
             df_original=df,
             df_limpo=limpeza_df,
@@ -68,15 +85,5 @@ if uploaded_file:
             hipoteses=hipoteses
         )
         st.download_button("Download PDF", pdf_bytes, "relatorio_zents_eda.pdf", "application/pdf")
-
-    # --- Botão para baixar o CSV tratado no FINAL da página ---
-    st.markdown("---")
-    st.subheader("Baixar Dados Tratados (CSV Final)")
-    st.download_button(
-        " Baixar arquivo tratado (CSV)",
-        limpeza_df.to_csv(index=False).encode('utf-8'),
-        file_name="dados_tratados.csv",
-        mime="text/csv"
-    )
 else:
     st.warning("Faça upload de um arquivo para começar.")
