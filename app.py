@@ -4,6 +4,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from io import BytesIO
+from modulos.relatorio import gerar_pdf_mem
 
 def gerar_pdf_melhorado(df_original, df_limpo, resumo_limpeza, linhas_removidas):
     from fpdf import FPDF
